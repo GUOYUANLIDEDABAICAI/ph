@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ph-security-agent" />
+        <module name="ph-security-auth-server" />
+        <module name="ph-security-common" />
+        <module name="ph-security-demo-client" />
+        <module name="ph-security-demo-provider" />
+        <module name="ph-security-eureka" />
+        <module name="ph-security-zuul" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ph-security" target="1.8" />
+      <module name="ph-security-agent" target="1.8" />
+      <module name="ph-security-auth-server" target="1.8" />
+      <module name="ph-security-common" target="1.8" />
+      <module name="ph-security-demo" target="1.8" />
+      <module name="ph-security-demo-client" target="1.8" />
+      <module name="ph-security-demo-provider" target="1.8" />
+      <module name="ph-security-eureka" target="1.8" />
+      <module name="ph-security-zuul" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

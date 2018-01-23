@@ -1,0 +1,29 @@
+spring:
+    application:
+        name: ph-security-zuul
+    redis:
+        database: 1
+        host: 127.0.0.1
+        pool:
+            max-active: 20
+        port: 6379
+
+server:
+    port: 8002
+
+eureka:
+    instance:
+        preferIpAddress: true
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8001/eureka/
+
+zuul:
+  prefix: /api #为zuul设置一个公共的前缀
+
+ph:
+  zuul:
+    auth:
+      loginInstance: ph-security-demo-client
+      loginPage: login
+      ignorePre: /css,/js,/about

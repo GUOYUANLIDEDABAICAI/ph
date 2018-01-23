@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ph-security.iml" filepath="$PROJECT_DIR$/ph-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ph-security-agent/ph-security-agent.iml" filepath="$PROJECT_DIR$/../ph-security-agent/ph-security-agent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ph-security-auth-server/ph-security-auth-server.iml" filepath="$PROJECT_DIR$/../ph-security-auth-server/ph-security-auth-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ph-security-common/ph-security-common.iml" filepath="$PROJECT_DIR$/../ph-security-common/ph-security-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ph-security-demo/ph-security-demo.iml" filepath="$PROJECT_DIR$/../ph-security-demo/ph-security-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ph-security-demo/ph-security-demo-client/ph-security-demo-client/ph-security-demo-client.iml" filepath="$PROJECT_DIR$/../ph-security-demo/ph-security-demo-client/ph-security-demo-client/ph-security-demo-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ph-security-demo/ph-security-demo-provider/ph-security-demo-provider.iml" filepath="$PROJECT_DIR$/../ph-security-demo/ph-security-demo-provider/ph-security-demo-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ph-security-eureka/ph-security-eureka.iml" filepath="$PROJECT_DIR$/../ph-security-eureka/ph-security-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ph-security-zuul/ph-security-zuul.iml" filepath="$PROJECT_DIR$/../ph-security-zuul/ph-security-zuul.iml" />
+    </modules>
+  </component>
+</project>

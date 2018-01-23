@@ -1,0 +1,43 @@
+server:
+  port: 8601
+spring:
+  application:
+    name: ph-security-auth-server
+  datasource:
+    name: test
+    url: jdbc:mysql://localhost:3306/ag_gate_way?useUnicode=true&characterEncoding=UTF8
+    username: root
+    password: 123456
+  redis:
+    port: 6379
+    host: 127.0.0.1
+
+eureka:
+    instance:
+       # statusPageUrlPath: ${management.context-path}/info
+       # healthCheckUrlPath: ${management.context-path}/health
+        preferIpAddress: true
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8001/eureka/
+
+auth:
+    client:
+        authHeader: access-token
+        authHost: http://localhost:8601/api/authen
+        tokenHead: PToken
+    ignore:
+        startWith: /admin,/index,/about
+        contain: .
+    api:
+        header: access-token  #http 请求头key
+        secret: phSecret    #jwt 加密密钥
+        expiration: 7200  # 过期秒数
+        tokenHead: PToken # 认证token前缀
+
+ph:
+  security:
+    auth:
+      homePage: http://localhost:8002/api/ph-security-demo-client/index
+      loginPage:
+      loginProcessingUrl:

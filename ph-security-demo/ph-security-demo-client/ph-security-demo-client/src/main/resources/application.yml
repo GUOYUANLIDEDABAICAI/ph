@@ -1,0 +1,52 @@
+spring:
+    application:
+        name: ph-security-demo-client
+    datasource:
+        name: test
+        url: jdbc:mysql://localhost:3306/ag_gate_way?useUnicode=true&characterEncoding=UTF8
+        username: root
+        password: 123456
+    thymeleaf:
+      content-type: text/html
+      mode: LEGACYHTML5
+      encoding: UTF-8
+      cache: false
+
+server:
+    port: 8702
+
+eureka:
+    instance:
+        statusPageUrlPath: /info
+        healthCheckUrlPath: /health
+        preferIpAddress: true
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8001/eureka/
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000000
+
+auth:
+  client:
+    clientId: gate-demo-client
+    secret: test
+    authHeader: access-token
+    authHost: http://localhost:8601/api/authen
+    tokenHead: PToken
+
+feign:
+  hystrix:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
