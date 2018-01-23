@@ -1,15 +1,11 @@
 package com.ph.security.auth.service;
 
 import com.ph.security.common.biz.UserBiz;
-import com.ph.security.common.entity.Group;
-import com.ph.security.common.entity.User;
-import com.ph.security.common.entity.ClientInfo;
+import com.ph.security.common.entity.*;
 import com.ph.security.agent.entity.auth.PermissionInfo;
 import com.ph.security.common.biz.ElementBiz;
 import com.ph.security.auth.biz.GateClientBiz;
 import com.ph.security.auth.constant.CommonConstant;
-import com.ph.security.common.entity.Element;
-import com.ph.security.common.entity.GateClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -65,7 +61,7 @@ public class GateService {
 		User user = userBiz.findByUsername(username);
 		List<Element> elements = new ArrayList<Element>();
 		Set<Element> elementSet = new HashSet<Element>();
-		for (Group g: user.getGroups()
+		for (Role g: user.getRoles()
 			 ) {
 			for (Element e:g.getElements()
 				 ) {

@@ -1,19 +1,19 @@
 package com.ph.security.demo.client.future;
 
-import com.ph.security.demo.client.rpc.ILanguageService;
+import com.ph.security.demo.client.rpc.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
 
 @Component
-public class LanguageFuture {
+public class ClientFuture {
     @Autowired
-    private ILanguageService languageService;
+    private IClientService clientService;
 
     public CompletableFuture<String> clientAuthen() {
         return CompletableFuture.supplyAsync(()->{
-            return languageService.clientAuthen();
+            return clientService.clientAuthen();
         });
     }
 }

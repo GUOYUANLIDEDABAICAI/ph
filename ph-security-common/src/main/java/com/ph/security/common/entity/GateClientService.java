@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-@Table(name = "gate_client_service")
+@Table(name = "auth_client_service")
 @Entity
 public class GateClientService {
     @Id

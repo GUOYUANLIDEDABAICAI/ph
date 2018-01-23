@@ -143,6 +143,10 @@ CREATE TABLE `oauth_code` (
 -- Dumping data for table `oauth_code`
 --
 
+begin;
+insert into role_element(id,role_id,element_id) values(2,1,4),(3,1,5),(4,1,9),(5,1,10),(6,1,12),(7,1,13),(8,1,14),(9,1,15),(10,1,16),(11,1,17),(12,1,18),(13,1,19),(14,1,20),(15,1,21),(16,1,22),(17,1,23),(18,1,24),(19,1,27),(20,1,28),(21,1,30),(22,1,31),(23,1,32),(24,1,33),(25,1,34),(26,1,35),(27,1,36),(28,1,37),(29,1,38),(30,1,39),(31,1,40),(32,1,41),(33,1,42),(34,1,43),(35,1,44),(36,1,45);
+commit;
+
 LOCK TABLES `oauth_code` WRITE;
 /*!40000 ALTER TABLE `oauth_code` DISABLE KEYS */;
 /*!40000 ALTER TABLE `oauth_code` ENABLE KEYS */;

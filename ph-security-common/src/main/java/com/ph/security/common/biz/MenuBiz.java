@@ -2,7 +2,6 @@ package com.ph.security.common.biz;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ph.security.common.entity.Element;
-import com.ph.security.common.entity.Group;
 import com.ph.security.common.entity.Menu;
 import com.ph.security.common.entity.User;
 import com.ph.security.common.repository.MenuRepository;

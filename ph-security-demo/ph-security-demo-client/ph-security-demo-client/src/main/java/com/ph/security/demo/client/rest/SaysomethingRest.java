@@ -1,7 +1,7 @@
 package com.ph.security.demo.client.rest;
 
 import com.ph.security.agent.annotation.IgnoreAuthSecurity;
-import com.ph.security.demo.client.future.LanguageFuture;
+import com.ph.security.demo.client.future.ClientFuture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +12,10 @@ import java.util.concurrent.ExecutionException;
 @Controller
 public class SaysomethingRest {
     @Autowired
-    private LanguageFuture languageFuture;
+    private ClientFuture clientFuture;
     @RequestMapping("test")
     @IgnoreAuthSecurity
     public @ResponseBody String test() throws ExecutionException, InterruptedException {
-        return languageFuture.clientAuthen().get();
+        return clientFuture.clientAuthen().get();
     }
 }

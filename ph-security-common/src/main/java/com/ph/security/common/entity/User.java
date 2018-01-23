@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Table(name = "base_user")
+@Table(name = "user")
 @Entity
 public class User {
     @Id
@@ -25,10 +25,10 @@ public class User {
     private String address;
 
     @ManyToMany(cascade = {}, fetch = FetchType.EAGER)
-    @JoinTable(name = "base_group_member",
+    @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "group_id")})
-    private List<Group> groups;
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private List<Role> roles;
 
     @Column(name = "mobile_phone")
     private String mobilePhone;
@@ -95,6 +95,14 @@ public class User {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     /**
@@ -172,14 +180,6 @@ public class User {
      */
     public String getAddress() {
         return address;
-    }
-
-    public List<Group> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
     }
 
     /**

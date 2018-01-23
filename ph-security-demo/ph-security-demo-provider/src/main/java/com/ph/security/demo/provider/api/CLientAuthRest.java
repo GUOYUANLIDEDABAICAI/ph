@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @ClientSecurity
 @RequestMapping("provider")
-public class LanguageRest {
+public class CLientAuthRest {
     @RequestMapping(value = "/test",method = RequestMethod.GET)
     public @ResponseBody String clientAuthen() throws InterruptedException {
         return "客户端访问成功";

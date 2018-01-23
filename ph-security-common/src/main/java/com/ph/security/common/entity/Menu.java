@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-@Table(name = "base_menu")
+@Table(name = "menu")
 @Entity
 public class Menu {
     @Id

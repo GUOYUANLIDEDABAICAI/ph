@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Table(name = "gate_client")
+@Table(name = "auth_client")
 @Entity
 public class GateClient {
     @Id

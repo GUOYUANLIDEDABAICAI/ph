@@ -5,9 +5,9 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Table(name = "base_group")
+@Table(name = "role")
 @Entity
-public class Group {
+public class Role {
     @Id
     private Integer id;
 
@@ -23,13 +23,10 @@ public class Group {
     private String type;
 
     @ManyToMany(cascade = {}, fetch = FetchType.EAGER)
-    @JoinTable(name = "base_resource_authority",
-            joinColumns = {@JoinColumn(name = "authority_id")},
-            inverseJoinColumns = {@JoinColumn(name = "resource_id")})
+    @JoinTable(name = "role_element",
+            joinColumns = {@JoinColumn(name = "role_id")},
+            inverseJoinColumns = {@JoinColumn(name = "element_id")})
     private List<Element> elements;
-
-    @Column(name = "group_type")
-    private Integer groupType;
 
     private String description;
 
@@ -163,20 +160,6 @@ public class Group {
      */
     public void setType(String type) {
         this.type = type;
-    }
-
-    /**
-     * @return group_type
-     */
-    public Integer getGroupType() {
-        return groupType;
-    }
-
-    /**
-     * @param groupType
-     */
-    public void setGroupType(Integer groupType) {
-        this.groupType = groupType;
     }
 
     /**

@@ -2,8 +2,8 @@ package com.ph.security.common.biz;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ph.security.common.entity.Element;
-import com.ph.security.common.entity.Group;
 import com.ph.security.common.entity.Menu;
+import com.ph.security.common.entity.Role;
 import com.ph.security.common.entity.User;
 import com.ph.security.common.repository.ElementRepository;
 import com.ph.security.common.repository.MenuRepository;
@@ -48,7 +48,7 @@ public class UserBiz {
         User user = findByUsername(username);
         List<Element> elements = new ArrayList<Element>();
         Set<Element> elementSet = new HashSet<Element>();
-        for (Group g: user.getGroups()
+        for (Role g: user.getRoles()
                 ) {
             for (Element e:g.getElements()
                     ) {
