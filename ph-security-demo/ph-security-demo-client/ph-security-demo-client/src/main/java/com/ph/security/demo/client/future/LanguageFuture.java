@@ -11,15 +11,9 @@ public class LanguageFuture {
     @Autowired
     private ILanguageService languageService;
 
-    public CompletableFuture<String> sayChineseHelloWorld() {
+    public CompletableFuture<String> clientAuthen() {
         return CompletableFuture.supplyAsync(()->{
-            return languageService.sayChineseHelloWorld();
-        });
-    }
-
-    public CompletableFuture<String> sayEnglishHelloWorld() {
-        return CompletableFuture.supplyAsync(()->{
-            return languageService.sayEnglishHelloWorld();
+            return languageService.clientAuthen();
         });
     }
 }

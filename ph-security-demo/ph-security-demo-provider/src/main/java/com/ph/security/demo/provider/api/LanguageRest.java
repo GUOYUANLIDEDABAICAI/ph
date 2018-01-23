@@ -8,14 +8,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @ClientSecurity
-@RequestMapping("language")
+@RequestMapping("provider")
 public class LanguageRest {
-    @RequestMapping(value = "/chinese",method = RequestMethod.GET)
-    public @ResponseBody String sayChineseHelloWorld() throws InterruptedException {
-        return "你好，世界！";
-    }
-    @RequestMapping(value = "/english",method = RequestMethod.GET)
-    public @ResponseBody String sayEnglishHelloWorld(){
-        return "Hello World！";
+    @RequestMapping(value = "/test",method = RequestMethod.GET)
+    public @ResponseBody String clientAuthen() throws InterruptedException {
+        return "客户端访问成功";
     }
 }

@@ -16,6 +16,6 @@ public class SaysomethingRest {
     @RequestMapping("test")
     @IgnoreAuthSecurity
     public @ResponseBody String test() throws ExecutionException, InterruptedException {
-        return languageFuture.sayChineseHelloWorld().get()+" : "+languageFuture.sayEnglishHelloWorld().get();
+        return languageFuture.clientAuthen().get();
     }
 }

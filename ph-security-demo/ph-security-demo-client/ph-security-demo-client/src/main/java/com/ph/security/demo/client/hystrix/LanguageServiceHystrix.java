@@ -5,11 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LanguageServiceHystrix implements ILanguageService {
-    public String sayChineseHelloWorld() {
-        return "hystrix 哑巴！";
-    }
-
-    public String sayEnglishHelloWorld() {
-        return "hystrix 哑巴！";
+    public String clientAuthen() {
+        return "客户端访问失败";
     }
 }

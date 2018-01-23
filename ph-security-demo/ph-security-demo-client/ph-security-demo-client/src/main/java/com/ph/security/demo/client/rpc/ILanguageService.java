@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @FeignClient(value = "ph-security-demo-provider",fallback = LanguageServiceHystrix.class)
 public interface ILanguageService {
-    @RequestMapping(value = "/language/chinese",method = RequestMethod.GET)
-    public String sayChineseHelloWorld();
-    @RequestMapping(value = "/language/english",method = RequestMethod.GET)
-    public String sayEnglishHelloWorld();
+    @RequestMapping(value = "/test",method = RequestMethod.GET)
+    public String clientAuthen();
 }
