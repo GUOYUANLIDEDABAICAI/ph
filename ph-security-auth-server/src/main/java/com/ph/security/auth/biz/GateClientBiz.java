@@ -4,8 +4,8 @@ package com.ph.security.auth.biz;
 import com.ph.security.auth.constant.CommonConstant;
 import com.ph.security.auth.constant.UserConstant;
 import com.ph.security.common.entity.Element;
-import com.ph.security.common.entity.GateClient;
-import com.ph.security.common.entity.GateClientService;
+import com.ph.security.common.entity.AuthClient;
+import com.ph.security.common.entity.AuthClientService;
 import com.ph.security.common.repository.ClientRepository;
 import com.ph.security.common.repository.ClientServiceRepostitory;
 import com.ph.security.common.repository.ElementRepository;
@@ -28,15 +28,15 @@ public class GateClientBiz {
     @Autowired
     private ClientServiceRepostitory clientServiceRepostitory;
 
-    public void insertSelective(GateClient entity) {
+    public void insertSelective(AuthClient entity) {
         String secret = new BCryptPasswordEncoder(UserConstant.PW_ENCORDER_SALT).encode(entity.getSecret());
         entity.setSecret(secret);
         entity.setLocked(CommonConstant.BOOLEAN_NUMBER_FALSE);
         clientRepository.save(entity);
     }
 
-    public void updateById(GateClient entity) {
-        GateClient old = clientRepository.findOne(entity.getId());
+    public void updateById(AuthClient entity) {
+        AuthClient old = clientRepository.findOne(entity.getId());
         if(!entity.getSecret().equals(old.getSecret())){
             String secret = new BCryptPasswordEncoder(UserConstant.PW_ENCORDER_SALT).encode(entity.getSecret());
             entity.setSecret(secret);
@@ -49,7 +49,7 @@ public class GateClientBiz {
         if(!StringUtils.isEmpty(services)){
             String[] mem = services.split(",");
             for(String m:mem){
-                GateClientService clientService = new GateClientService();
+                AuthClientService clientService = new AuthClientService();
                 clientService.setServiceId(Integer.parseInt(m));
                 clientService.setClientId(id);
                 clientServiceRepostitory.save(clientService);
@@ -62,8 +62,8 @@ public class GateClientBiz {
         return null;
     }
 
-    public List<GateClient> selectByExample(GateClient gateClient) {
-        Example<GateClient> example = Example.of(gateClient);
+    public List<AuthClient> selectByExample(AuthClient gateClient) {
+        Example<AuthClient> example = Example.of(gateClient);
         return clientRepository.findAll(example);
     }
 }

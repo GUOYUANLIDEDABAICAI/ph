@@ -13,9 +13,9 @@ eureka:
     instance:
     client:
         serviceUrl:
-            defaultZone: http://localhost:8001/eureka/
+            defaultZone: http://172.18.110.115:8001/eureka/
 
 auth:
   client:
-    authHost: http://localhost:8601/api/authen
+    authHost: http://172.18.110.115:8601/api/authen
     authHeader: access-token

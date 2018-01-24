@@ -3,6 +3,8 @@ package com.ph.security.demo.client.controller;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.ph.security.agent.annotation.IgnoreAuthSecurity;
+import com.ph.security.common.context.BaseContextHandler;
+import com.ph.security.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,13 +23,14 @@ public class HomeController {
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     @IgnoreAuthSecurity
     public String login(){
-        return "login";
+        return "page/login/login";
     }
 
     @IgnoreAuthSecurity
     @RequestMapping(value = "/index",method = RequestMethod.GET)
-    public String index(HttpServletResponse response, HttpServletRequest request){
-
+    public String index(Model model){
+        User user = BaseContextHandler.getUser();
+        model.addAttribute("user",user);
         return "index";
     }
 

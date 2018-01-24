@@ -5,6 +5,7 @@ import com.ph.security.agent.annotation.IgnoreAuthSecurity;
 import com.ph.security.agent.exception.AuthenticationServerErrorException;
 import com.ph.security.agent.util.TokenUtil;
 import com.ph.security.common.context.BaseContextHandler;
+import com.ph.security.common.entity.User;
 import com.ph.security.common.util.CookiesUtil;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
@@ -79,7 +80,9 @@ public class UserAuthInterceptor extends HandlerInterceptorAdapter {
     public void getCurrentUser(HttpServletRequest httpRequest){
         String toekn = httpRequest.getHeader("Authorization");
         String username = TokenUtil.getUsername(toekn);
-        BaseContextHandler.setName(username);
+        User user = new User();
+        user.setUsername(username);
+        BaseContextHandler.setUser(user);
     }
 
     public void removeCookie(HttpServletResponse response){

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Table(name = "auth_client")
 @Entity
-public class GateClient {
+public class AuthClient {
     @Id
     private Integer id;
 
@@ -23,7 +23,7 @@ public class GateClient {
     private String description;
 
     @ManyToMany(cascade = {}, fetch = FetchType.EAGER)
-    @JoinTable(name = "gate_client_service",
+    @JoinTable(name = "auth_client_service",
             joinColumns = {@JoinColumn(name = "client_id")},
             inverseJoinColumns = {@JoinColumn(name = "service_id")})
     private List<Element> elements;

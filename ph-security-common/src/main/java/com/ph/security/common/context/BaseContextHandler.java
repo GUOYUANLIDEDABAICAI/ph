@@ -1,6 +1,7 @@
 package com.ph.security.common.context;
 
 import com.ph.security.common.constant.CommonConstants;
+import com.ph.security.common.entity.User;
 import com.ph.security.common.util.StringHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,9 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by ace on 2017/9/8.
- */
 public class BaseContextHandler {
     public static ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal<Map<String, Object>>();
 
@@ -31,8 +29,17 @@ public class BaseContextHandler {
         }
         return map.get(key);
     }
+    public static User getUser(){
+        Object value = get(CommonConstants.CONTEXT_KEY_USER);
+        return (User)value;
+    }
 
-    public static String getUserID(){
+    public static void setUser(User user){
+        set(CommonConstants.CONTEXT_KEY_USER,user);
+    }
+
+
+    /*public static String getUserID(){
         Object value = get(CommonConstants.CONTEXT_KEY_USER_ID);
         return returnObjectValue(value);
     }
@@ -66,7 +73,7 @@ public class BaseContextHandler {
 
     private static String returnObjectValue(Object value) {
         return value==null?null:value.toString();
-    }
+    }*/
 
     public static void remove(){
         threadLocal.remove();

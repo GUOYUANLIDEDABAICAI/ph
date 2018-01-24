@@ -19,12 +19,12 @@ eureka:
         preferIpAddress: true
     client:
         serviceUrl:
-            defaultZone: http://localhost:8001/eureka/
+            defaultZone: http://172.18.110.115:8001/eureka/
 
 auth:
     client:
         authHeader: access-token
-        authHost: http://localhost:8601/api/authen
+        authHost: http://172.18.110.115:8601/api/authen
         tokenHead: PToken
     ignore:
         startWith: /admin,/index,/about
@@ -38,6 +38,6 @@ auth:
 ph:
   security:
     auth:
-      homePage: http://localhost:8002/api/ph-security-demo-client/index
+      homePage: http://172.18.110.115:8002/api/ph-security-demo-client/index
       loginPage:
       loginProcessingUrl:

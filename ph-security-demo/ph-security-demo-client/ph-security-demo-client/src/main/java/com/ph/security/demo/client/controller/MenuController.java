@@ -47,7 +47,7 @@ public class MenuController{
     @IgnoreAuthSecurity
     public String getUserSystem(@RequestParam(defaultValue = "13") Integer parentId, HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin","*");
-        return userBiz.getSystemsByUsername(BaseContextHandler.getName(),parentId);
+        return userBiz.getSystemsByUsername(BaseContextHandler.getUser().getUsername(),parentId);
     }
 
     @RequestMapping(value = "menu/list",method = RequestMethod.GET)

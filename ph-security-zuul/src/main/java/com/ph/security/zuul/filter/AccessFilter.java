@@ -99,7 +99,7 @@ public class AccessFilter extends ZuulFilter {
                         //BaseContextHandler.setToken(token);
                         token_cookie = new Cookie("token", token);
                         token_cookie.setMaxAge(3600);
-                        token_cookie.setDomain("localhost");
+                        token_cookie.setDomain("172.18.110.115");
                         token_cookie.setPath("/");
                         httpServletResponse.addCookie(token_cookie);
                         //accessToken.get().set(token);
@@ -168,7 +168,7 @@ public class AccessFilter extends ZuulFilter {
         jsonObject.put("username", username);
         jsonObject.put("password", password);
         InstanceInfo authInstance = discoveryClient.getNextServerFromEureka(zuulProperties.getAuth().getAuthInstance(), false);
-        HttpResponse response = HttpRequest.post("http://localhost:"+authInstance.getPort()+zuulProperties.getAuth().getToken().getCreate_token_url()).contentType("application/json").body(jsonObject.toJSONString())
+        HttpResponse response = HttpRequest.post("http://172.18.110.115:"+authInstance.getPort()+zuulProperties.getAuth().getToken().getCreate_token_url()).contentType("application/json").body(jsonObject.toJSONString())
                 .send();
         if (response.statusCode() == 200) {
             token = JSON.parseObject(response.body()).getString("token");

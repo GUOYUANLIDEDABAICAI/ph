@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Table(name = "auth_client_service")
 @Entity
-public class GateClientService {
+public class AuthClientService {
     @Id
     private Integer id;
     @Column(name = "service_id")

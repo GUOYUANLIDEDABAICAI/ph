@@ -22,7 +22,7 @@ eureka:
         preferIpAddress: true
     client:
         serviceUrl:
-            defaultZone: http://localhost:8001/eureka/
+            defaultZone: http://172.18.110.115:8001/eureka/
 
 hystrix:
   command:
@@ -37,7 +37,7 @@ auth:
     clientId: gate-demo-client
     secret: test
     authHeader: access-token
-    authHost: http://localhost:8601/api/authen
+    authHost: http://172.18.110.115:8601/api/authen
     tokenHead: PToken
 
 feign:
