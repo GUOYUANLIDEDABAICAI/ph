@@ -34,7 +34,7 @@ hystrix:
 
 auth:
   client:
-    clientId: gate-demo-client
+    clientId: auth-client
     secret: test
     authHeader: access-token
     authHost: http://172.18.110.115:8601/api/authen

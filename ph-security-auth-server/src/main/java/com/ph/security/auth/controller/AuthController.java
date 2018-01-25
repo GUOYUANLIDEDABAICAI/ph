@@ -1,6 +1,5 @@
 package com.ph.security.auth.controller;
 
-import com.ph.security.auth.biz.AuthBiz;
 import com.ph.security.auth.biz.auth.ClientAuthBiz;
 import com.ph.security.auth.biz.auth.UserAuthBiz;
 import com.ph.security.auth.security.*;
@@ -20,9 +19,6 @@ public class AuthController {
     private String tokenHeader;
 
     @Autowired
-    private AuthBiz authService;
-
-    @Autowired
     private UserAuthBiz userAuthBiz;
 
     @Autowired
@@ -31,8 +27,8 @@ public class AuthController {
     @ApiOperation(value="获取用户的token", notes="传入用户名和密码")
     @RequestMapping(value = "token", method = RequestMethod.POST)
     public ResponseEntity<?> createUserAuthenticationToken(
-            @RequestBody UserAuthenticationRequest authenticationRequest, HttpServletResponse response) {
-        final String token = userAuthBiz.login(authenticationRequest.getUsername(), authenticationRequest.getPassword(),response);
+            @RequestBody UserAuthenticationRequest authenticationRequest) {
+        final String token = userAuthBiz.login(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
         // Return the token
         return ResponseEntity.ok(new AuthenticationResponse(token));
@@ -52,7 +48,7 @@ public class AuthController {
     @RequestMapping(value = "refresh", method = RequestMethod.GET)
     public ResponseEntity<?> refreshAndGetAuthenticationToken(
             String token) {
-        String refreshedToken = authService.refresh(token);
+        String refreshedToken = userAuthBiz.refresh(token);
         if(refreshedToken == null) {
             return ResponseEntity.badRequest().body(null);
         } else {
@@ -62,8 +58,8 @@ public class AuthController {
 
     @ApiOperation(value="验证客户端token是否有效", notes="传入申请的token")
     @RequestMapping(value = "verify", method = RequestMethod.GET)
-    public ResponseEntity<?> verify(@ApiParam(value = "前缀+token,例如:PToke+token" ,required=true ) @RequestParam String token,
-                                    @ApiParam(value = "资源路径+请求方式,例如:/language/english:GET",required = true) @RequestParam String resource){
+    public ResponseEntity<?> verify(@ApiParam(value = "前缀+token,例如:PToken+token" ,required=true ) @RequestParam String token,
+                                    @ApiParam(value = "资源路径+请求方式,例如:/provider/test:GET",required = true) @RequestParam String resource){
         if(clientAuthBiz.validate(token,resource))
             return ResponseEntity.ok(true);
         else
@@ -72,7 +68,7 @@ public class AuthController {
 
     @ApiOperation(value="验证用户的token是否有效", notes="传入申请的token")
     @RequestMapping(value = "userVerify", method = RequestMethod.GET)
-    public ResponseEntity<?> verifyUserToken(@ApiParam(value = "前缀+token,例如:PToke+token",required = true) @RequestParam String token,
+    public ResponseEntity<?> verifyUserToken(@ApiParam(value = "前缀+token,例如:PToken+token",required = true) @RequestParam String token,
                                              @ApiParam(value = "资源路径+请求方式,例如:/index:GET",required = true) @RequestParam String resource){
         if(userAuthBiz.validate(token,resource))
             return ResponseEntity.ok(true);

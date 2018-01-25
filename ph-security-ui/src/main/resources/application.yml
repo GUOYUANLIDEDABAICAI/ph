@@ -15,4 +15,11 @@ eureka:
         preferIpAddress: true
     client:
         serviceUrl:
-            defaultZone: http://localhost:8001/eureka/
+            defaultZone: http://172.18.110.115:8001/eureka/
+auth:
+  client:
+    clientId: auth-client
+    secret: test
+    authHeader: access-token
+    authHost: http://172.18.110.115:8601/api/authen
+    tokenHead: PToken

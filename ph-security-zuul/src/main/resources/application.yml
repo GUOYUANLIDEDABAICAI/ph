@@ -23,7 +23,8 @@ zuul:
 
 ph:
   zuul:
+    zuulInstance: ph-security-zuul
     auth:
       loginInstance: ph-security-demo-client
-      loginPage: login
+      loginPage: /login
       ignorePre: /css,/js,/about

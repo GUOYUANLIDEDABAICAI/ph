@@ -3,7 +3,6 @@
  */
 package com.ph.security.auth.authentication;
 
-import com.ph.security.auth.biz.AuthBiz;
 import com.ph.security.auth.biz.auth.UserAuthBiz;
 import com.ph.security.auth.properties.GeneralProperties;
 import org.slf4j.Logger;

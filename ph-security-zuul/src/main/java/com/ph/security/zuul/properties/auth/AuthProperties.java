@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 public class AuthProperties {
 
-    private String loginPage = "login"; //使用的是相对路径,不加"/"
+    private String loginPage = "/login";
 
     private String loginInstance = "ph-security-auth-server";
 

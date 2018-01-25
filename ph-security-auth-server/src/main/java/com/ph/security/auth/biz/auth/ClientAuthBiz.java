@@ -23,7 +23,7 @@ public class ClientAuthBiz extends BaseBiz{
     public String login(String clientId, String secret) {
         ClientInfo info = gateService.getGateClientInfo(clientId);
         String token = "";
-        //logger.info("123的加密后的值:"+encoder.encode("123"));
+        logger.info("客户端secret的加密后的值:"+encoder.encode(secret));
         //logger.info("test的加密后的值:"+encoder.encode("test"));
         if(encoder.matches(secret,info.getSecret())) {
             token = jwtTokenUtil.generateToken(info);

@@ -3,6 +3,7 @@ package com.ph.security.auth.biz.auth;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.ph.security.agent.entity.auth.PermissionInfo;
+import com.ph.security.common.entity.ClientInfo;
 import com.ph.security.common.entity.User;
 import com.ph.security.common.repository.UserRepository;
 import com.ph.security.auth.service.GateService;
@@ -33,7 +34,7 @@ public class UserAuthBiz extends BaseBiz {
         super(jwtTokenUtil,gateService);
     }
 
-    public String login(String username, String password, HttpServletResponse response) {
+    public String login(String username, String password) {
         User user = userRepository.findByUsername(username);
         String token = null;
         logger.info("password编码后的值==========="+encoder.encode(password));
@@ -49,6 +50,16 @@ public class UserAuthBiz extends BaseBiz {
         final String token = oldToken.substring(tokenHead.length());
         String username = jwtTokenUtil.getClientIdOrUsernameFromToken(token);
         return !jwtTokenUtil.isTokenExpired(token)&&validateResource(username,resource);
+    }
+
+    public String refresh(String oldToken) {
+        final String token = oldToken.substring(tokenHead.length());
+        String clientId = jwtTokenUtil.getClientIdOrUsernameFromToken(token);
+        ClientInfo info = gateService.getGateClientInfo(clientId);
+        if (jwtTokenUtil.canTokenBeRefreshed(token,info.getUpdTime())){
+            return jwtTokenUtil.refreshToken(token);
+        }
+        return null;
     }
 
     @Override

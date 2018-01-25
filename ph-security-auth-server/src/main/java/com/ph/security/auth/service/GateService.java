@@ -29,12 +29,12 @@ public class GateService {
 	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
 	public ClientInfo getGateClientInfo(String clientId) {
-		GateClient example = new GateClient();
+		AuthClient example = new AuthClient();
 		example.setCode(clientId);
 		ClientInfo info = new ClientInfo();
-		GateClient gateClient = gateClientBiz.selectByExample(example).get(0);
-		BeanUtils.copyProperties(gateClient, info);
-		info.setLocked(CommonConstant.BOOLEAN_NUMBER_TRUE.equals(gateClient.getLocked()));
+		AuthClient authClient = gateClientBiz.selectByExample(example).get(0);
+		BeanUtils.copyProperties(authClient, info);
+		info.setLocked(CommonConstant.BOOLEAN_NUMBER_TRUE.equals(authClient.getLocked()));
 //		info.setSecret(encoder.encode(info.getSecret()));
 		return info;
 	}
@@ -49,11 +49,11 @@ public class GateService {
 	}
 
 	public List<PermissionInfo> getGateServiceInfo(String clientId) {
-		GateClient example = new GateClient();
+		AuthClient example = new AuthClient();
 		example.setCode(clientId);
-		GateClient gateClient = gateClientBiz.selectByExample(example).get(0);
+		AuthClient authClient = gateClientBiz.selectByExample(example).get(0);
 		List<PermissionInfo> infos = new ArrayList<PermissionInfo>();
-		convert(infos, gateClient.getElements());
+		convert(infos, authClient.getElements());
 		return infos;
 	}
 

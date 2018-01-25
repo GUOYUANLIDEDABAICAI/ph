@@ -10,6 +10,16 @@ public class ZuulProperties {
 
     private AuthProperties auth = new AuthProperties();
 
+    private String zuulInstance;
+
+    public String getZuulInstance() {
+        return zuulInstance;
+    }
+
+    public void setZuulInstance(String zuulInstance) {
+        this.zuulInstance = zuulInstance;
+    }
+
     public AuthProperties getAuth() {
         return auth;
     }

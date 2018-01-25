@@ -20,6 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
@@ -44,6 +45,9 @@ public class AccessFilter extends ZuulFilter {
     @Autowired
     private ZuulProperties zuulProperties;
 
+    @Value("${zuul.prefix}")
+    private String zuulPre;
+
     User user;
 
     @Autowired
@@ -56,8 +60,6 @@ public class AccessFilter extends ZuulFilter {
     private EurekaClient discoveryClient; //此处报错可以忽略
 
     Logger logger = LoggerFactory.getLogger(getClass());
-
-
 
     @Override
     public String filterType() {
@@ -85,33 +87,48 @@ public class AccessFilter extends ZuulFilter {
             String redirectUrl = "";
             //String token = (String) jedis.get("token");
             Cookie token_cookie = CookiesUtil.getCookieByName(request,"token");
+            Cookie redirectUrl_cookie = CookiesUtil.getCookieByName(request,"redirectUrl");
             if (isStartWith(requestUri)) {
                 return null;
             }
 
             String token = null;
             if (request.getRequestURI().endsWith(zuulProperties.getAuth().getLoginPage())){
-                String username = request.getParameter("username");
-                String password = request.getParameter("password");
-                if (username != null && password != null) {
-                    token = getToken(username, password);
-                    if (token != null) {
-                        //BaseContextHandler.setToken(token);
-                        token_cookie = new Cookie("token", token);
-                        token_cookie.setMaxAge(3600);
-                        token_cookie.setDomain("172.18.110.115");
-                        token_cookie.setPath("/");
-                        httpServletResponse.addCookie(token_cookie);
-                        //accessToken.get().set(token);
+                if (StringUtils.equalsIgnoreCase("post",request.getMethod())) {
+                    String username = request.getParameter("username");
+                    String password = request.getParameter("password");
+                    if (username != null && password != null) {
+                        token = getToken(username, password);
+                        if (token != null) {
+                            //BaseContextHandler.setToken(token);
+                            token_cookie = new Cookie("token", token);
+                            token_cookie.setMaxAge(3600);
+                            token_cookie.setDomain("172.18.110.115");
+                            token_cookie.setPath("/");
+                            httpServletResponse.addCookie(token_cookie);
+                            //accessToken.get().set(token);
                         /*user = new User();
                         user.setPassword(password);
                         user.setUsername(username);
                         executor.compareAndSet(null, scheduledExecutor());*/
-                        redirectUrl = zuulProperties.getAuth().getHomePage();
+                        if (redirectUrl_cookie == null) {
+                            redirectUrl = zuulProperties.getAuth().getHomePage();
+                        }else {
+                            redirectUrl = redirectUrl_cookie.getValue();
+                        }
+                        }
+                    } else {
+                        loginRedirect(httpServletResponse);
                     }
-                } else {
+                }else {
                     return null;
                 }
+            } else {
+                redirectUrl_cookie = new Cookie("redirectUrl", request.getRequestURI());
+                redirectUrl_cookie.setMaxAge(60);
+                redirectUrl_cookie.setDomain("172.18.110.115");
+                redirectUrl_cookie.setPath("/");
+                httpServletResponse.addCookie(redirectUrl_cookie);
             }
 
             if (token_cookie == null){
@@ -151,9 +168,9 @@ public class AccessFilter extends ZuulFilter {
     }
 
     private void loginRedirect(HttpServletResponse httpServletResponse) throws IOException {
-        InstanceInfo instance = discoveryClient.getNextServerFromEureka(zuulProperties.getAuth().getLoginInstance(), false);
-        httpServletResponse.sendRedirect(zuulProperties.getAuth().getLoginPage());
-        //httpServletResponse.sendRedirect("http://localhost:"+instance.getPort()+zuulProperties.getAuth().getLoginPage());
+        InstanceInfo instance = discoveryClient.getNextServerFromEureka(zuulProperties.getZuulInstance(), false);
+        //httpServletResponse.sendRedirect(zuulProperties.getAuth().getLoginPage());
+        httpServletResponse.sendRedirect("http://"+instance.getIPAddr()+":"+instance.getPort()+zuulPre+"/"+zuulProperties.getAuth().getLoginInstance()+zuulProperties.getAuth().getLoginPage());
         return;
     }
 
