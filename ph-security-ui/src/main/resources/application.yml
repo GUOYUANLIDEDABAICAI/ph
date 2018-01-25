@@ -1,0 +1,18 @@
+spring:
+    application:
+        name: ph-security-ui
+    thymeleaf:
+        mode: LEGACYHTML5
+        cache: false
+
+server:
+    port: 8003
+
+eureka:
+    instance:
+        statusPageUrlPath: /info
+        healthCheckUrlPath: /health
+        preferIpAddress: true
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8001/eureka/
