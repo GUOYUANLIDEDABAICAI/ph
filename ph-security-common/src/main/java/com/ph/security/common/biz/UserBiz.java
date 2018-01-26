@@ -99,28 +99,28 @@ public class UserBiz {
         List<Menu> sysMenus = menuRepository.findAll(example);
         List<Menu> menusList = getMenusByUsername(name);
         List<Menu> menus = new ArrayList<>();
-        for (Menu m: sysMenus
+        for (Menu m : sysMenus
                 ) {
             menus.add(m);
 
         }
-        if (menusList != null){
-            for (Menu m1:menusList
+        if (menusList != null) {
+            for (Menu m1 : menusList
                     ) {
                 menus.add(m1);
             }
         }
 
-        return JSONObject.toJSONString(getMenuTree(menus,parentId));
+        return JSONObject.toJSONString(getMenuTree(menus, parentId));
     }
 
-    public String getUserList() {
+    /*public String getUserList() {
         List<User> users = userRepository.findAll();
         List<UserVo> userVos = userConvert(users);
         return JSONObject.toJSONString(userVos);
-    }
+    }*/
 
-    private List<UserVo> userConvert(List<User> users) {
+    /*private List<UserVo> userConvert(List<User> users) {
         ArrayList<UserVo> userVos = new ArrayList<>();
         for (User user: users
              ) {
@@ -146,9 +146,14 @@ public class UserBiz {
         user.setEmail(userVo.getUserEmail());
         user.setStatus("0");
         userRepository.save(user);
-    }
+    }*/
 
     public List<Element> selectByExample(Example example) {
         return elementRepository.findAll(example);
     }
+
+    public List<User> getUserList() {
+            List<User> users = userRepository.findAll();
+            return users;
+        }
 }

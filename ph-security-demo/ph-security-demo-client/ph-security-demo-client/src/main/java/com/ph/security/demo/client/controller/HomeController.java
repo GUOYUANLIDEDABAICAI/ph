@@ -42,13 +42,13 @@ public class HomeController {
     @RequestMapping(value = "user",method = RequestMethod.GET)
     @IgnoreAuthSecurity
     public String user(){
-        return "page/user/allUsers";
+        return "page/user/list";
     }
 
-    @RequestMapping(value = "addUser",method = RequestMethod.GET)
+    @RequestMapping(value = "user/edit",method = RequestMethod.GET)
     @IgnoreAuthSecurity
-    public String adduser(){
-        return "page/user/addUser";
+    public String editUser(){
+        return "page/user/edit";
     }
 
     @RequestMapping(value = "menu",method = RequestMethod.GET)
@@ -61,5 +61,17 @@ public class HomeController {
     @IgnoreAuthSecurity
     public String editMenu(){
         return "page/menu/edit";
+    }
+
+    @RequestMapping(value = "role",method = RequestMethod.GET)
+    @IgnoreAuthSecurity
+    public String getRoles(){
+        return "page/role/list";
+    }
+
+    @RequestMapping(value = "role/edit",method = RequestMethod.GET)
+    @IgnoreAuthSecurity
+    public String editRole(){
+        return "page/role/edit";
     }
 }
