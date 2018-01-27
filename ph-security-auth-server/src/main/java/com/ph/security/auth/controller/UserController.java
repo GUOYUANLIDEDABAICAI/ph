@@ -44,11 +44,11 @@ public class UserController {
 
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(HttpServletResponse response, HttpServletRequest request){
-        SavedRequest savedRequest = requestCache.getRequest(request, response);
+        /*SavedRequest savedRequest = requestCache.getRequest(request, response);
         if (savedRequest != null) {
             String redirectUrl = savedRequest.getRedirectUrl();
             logger.info("引发跳转的请求是:"+redirectUrl);
-        }
+        }*/
         return "login";
     }
 }
