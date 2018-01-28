@@ -43,7 +43,7 @@
 		<module>../ph-security-zuul</module>
 		<module>../ph-security-demo</module>
 		<module>../ph-security-auth-server</module>
-		<module>../ph-security-ui</module>
+		<module>../ph-security-resource-server</module>
 		<module>../ph-security-agent</module>
 		<module>../ph-security-common</module>
 	</modules>

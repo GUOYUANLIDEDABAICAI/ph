@@ -12,8 +12,7 @@
     <artifactId>ph-security-demo</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>ph-security-demo-provider</module>
-        <module>ph-security-demo-client</module>
+        <module>oauth-client</module>
     </modules>
     <!--依赖管理，用于管理spring-cloud的依赖，其中Camden.SR3是版本号-->
     <dependencyManagement>

@@ -1,0 +1,26 @@
+spring:
+    application:
+        name: ph-security-demo-provider
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+        default-property-inclusion: non_null
+    thymeleaf:
+      content-type: text/html
+      mode: LEGACYHTML5
+      encoding: UTF-8
+      cache: false
+
+server:
+    port: 8701
+
+eureka:
+    instance:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8001/eureka/
+
+auth:
+  client:
+    authHost: http://localhost:8601/api/authen
+    authHeader: access-token

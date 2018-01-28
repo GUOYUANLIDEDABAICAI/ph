@@ -1,9 +1,10 @@
 package com.ph.security.auth.config;
 
 import com.ph.security.auth.properties.GeneralProperties;
-import com.ph.security.auth.service.MyUserDetailsService;
+import com.ph.security.auth.configuration.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -11,9 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.stereotype.Component;
 
-@Component
+@Configuration
 public class WebConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -36,12 +36,12 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 .loginPage(generalProperties.getAuth().getLoginPage())
-                .loginProcessingUrl(generalProperties.getAuth().getLoginProcessingUrl())
+                //.loginProcessingUrl(generalProperties.getAuth().getLoginProcessingUrl())
                 .successHandler(phAuthenticationSuccessHandler)
                 .failureHandler(phAuthenticationFailureHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/authen/*","/swagger-ui.html","/v2/api-docs","/swagger-resources/**",
+                .antMatchers("/api/authen/*","/swagger-ui.html","/v2/api-docs","/swagger-resources/**","/oauth/**",
                         generalProperties.getAuth().getLoginPage(),
                         generalProperties.getAuth().getLoginProcessingUrl())
                 .permitAll()

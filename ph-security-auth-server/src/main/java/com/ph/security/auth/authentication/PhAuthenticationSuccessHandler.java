@@ -3,15 +3,29 @@
  */
 package com.ph.security.auth.authentication;
 
-import com.ph.security.auth.biz.auth.UserAuthBiz;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ph.security.auth.properties.GeneralProperties;
+import com.ph.security.auth.configuration.MyUserDetailsService;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.codec.Base64;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
+import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Request;
+import org.springframework.security.oauth2.provider.TokenRequest;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.Jedis;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,37 +44,86 @@ public class PhAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 	@Autowired
 	private GeneralProperties generalProperties;
 
-	/*@Autowired
-	AuthBiz authBiz;*/
+	@Autowired
+	private MyUserDetailsService myUserDetailsService;
 
 	@Autowired
-	UserAuthBiz userAuthBiz;
+	private ObjectMapper objectMapper;
+
+	private RequestCache requestCache = new HttpSessionRequestCache();
 
 	@Autowired
-	Jedis jedis;
-	
-	/* (non-Javadoc)
-	 * @see org.springframework.security.web.authentication.AuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
-	 */
-	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-			throws IOException, ServletException {
-		logger.info("登录成功");
-		/*logger.info(authentication.getName());
-		String token = userAuthBiz.login(authentication.getName());
-        jedis.set("token",token);
-        jedis.expire("token",70);*/
-		/*String redirectUrl = (String) jedis.get(request.getRemoteHost()+"redirectUrl");
-		logger.info("缓存的从定向页面是:"+redirectUrl);
-		logger.info("key值是:"+request.getRemoteHost()+"redirectUrl");
-		if (redirectUrl != null){
-		    jedis.del(request.getRemoteAddr()+"redirectUrl");
-			response.sendRedirect(redirectUrl);
+	private AuthorizationServerTokenServices authorizationServerTokenServices;
+
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
+		String code = request.getHeader("code");
+		if (code != null){
+			SavedRequest savedRequest = this.requestCache.getRequest(request, response);
+			String targertUrl = savedRequest.getRedirectUrl();
+			response.setHeader("REDIRECT",targertUrl);
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			//super.onAuthenticationSuccess(request,response,authentication);
 		}else {
-			response.sendRedirect(generalProperties.getAuth().getHomePage());
-		}*/
+			String header = request.getHeader("Authorization");
+
+			if (header == null || !header.startsWith("Basic ")) {
+				throw new UnapprovedClientAuthenticationException("请求头中无client信息");
+			}
+
+			String[] tokens = extractAndDecodeHeader(header, request);
+			assert tokens.length == 2;
+			String clientId = tokens[0];
+			String clientSecret = tokens[1];
+			ClientDetails clientDetails = myUserDetailsService.loadClientByClientId(clientId);
+
+			logger.info("clientDetails=====" + clientDetails);
+			if (clientDetails == null) {
+				throw new UnapprovedClientAuthenticationException("clientId对应的信息不存在:" + clientId);
+			} else if (!StringUtils.equals(clientDetails.getClientSecret(), clientSecret)) {
+				throw new UnapprovedClientAuthenticationException("clientSecret不匹配:" + clientSecret);
+			}
+
+			TokenRequest tokenRequest = new TokenRequest(MapUtils.EMPTY_MAP, clientId, clientDetails.getScope(), "custom");
+
+			OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
+
+			OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
+
+			OAuth2AccessToken token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
+
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().write(objectMapper.writeValueAsString(token));
+		}
 
 
+	}
+
+	/**
+	 * Decodes the header into a username and password.
+	 *
+	 * @throws BadCredentialsException if the Basic header is not present or is not valid
+	 *                                 Base64
+	 */
+	private String[] extractAndDecodeHeader(String header, HttpServletRequest request)
+			throws IOException {
+
+		byte[] base64Token = header.substring(6).getBytes("UTF-8");
+		byte[] decoded;
+		try {
+			decoded = Base64.decode(base64Token);
+		} catch (IllegalArgumentException e) {
+			throw new BadCredentialsException(
+					"Failed to decode basic authentication token");
+		}
+
+		String token = new String(decoded, "UTF-8");
+
+		int delim = token.indexOf(":");
+
+		if (delim == -1) {
+			throw new BadCredentialsException("Invalid basic authentication token");
+		}
+		return new String[]{token.substring(0, delim), token.substring(delim + 1)};
 	}
 
 }

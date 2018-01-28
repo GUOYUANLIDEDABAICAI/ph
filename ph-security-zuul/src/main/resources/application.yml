@@ -20,11 +20,3 @@ eureka:
 
 zuul:
   prefix: /api #为zuul设置一个公共的前缀
-
-ph:
-  zuul:
-    zuulInstance: ph-security-zuul
-    auth:
-      loginInstance: ph-security-demo-client
-      loginPage: /login
-      ignorePre: /css,/js,/about
