@@ -1,0 +1,50 @@
+server:
+  port: 8601
+spring:
+  application:
+    name: ldap-auth-server
+  datasource:
+    name: test
+    url: jdbc:mysql://172.18.110.115:3306/mysiteforme?useUnicode=true&characterEncoding=UTF8
+    username: root
+    password: 123456
+  redis:
+    port: 6379
+    host: 127.0.0.1
+  thymeleaf:
+    content-type: text/html
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    cache: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: com.ph.security.ldap.auth.configuration.MySQL5DialectUTF8
+#  ldap:
+#    embedded:
+#      ldif: classpath:test-server.ldif
+#      base-dn: dc=springframework,dc=org
+#      port: 8889
+
+eureka:
+    instance:
+       # statusPageUrlPath: ${management.context-path}/info
+       # healthCheckUrlPath: ${management.context-path}/health
+        preferIpAddress: true
+    client:
+        serviceUrl:
+            defaultZone: http://172.18.110.115:8001/eureka/
+
+ph:
+  security:
+    auth:
+      homePage: /index
+      loginPage: 
+      loginProcessingUrl:
+
+#security:
+#  oauth2:
+#    resource:
+#      filter-order: 3

@@ -1,0 +1,69 @@
+server:
+    port: 8091
+    session:
+      cookie:
+        name: BackgroundSession
+
+spring:
+  application:
+    name: background-manager
+  thymeleaf:
+    content-type: text/html
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    cache: false
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mysiteforme?useUnicode=true&characterEncoding=utf8&useSSL=false&tinyInt1isBit=false
+    username: root
+    password: 123456
+    druid:
+      validationQuery: SELECT 1
+      initialSize: 10
+      minIdle: 10
+      maxActive: 200
+      minEvictableIdleTimeMillis: 180000
+      testOnBorrow: false
+      testWhileIdle: true
+      removeAbandoned: true
+      removeAbandonedTimeout: 1800
+      logAbandoned: true
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 100
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.ph.admin.entity
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  typeAliasesPackage: com.ph.admin.entity
+
+  global-config:
+    id-type: 0
+    field-strategy: 2
+    db-column-underline: true
+    refresh-mapper: true
+    metaObjectHandler: com.ph.admin.config.SysMetaObjectHandler
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+eureka:
+    instance:
+        preferIpAddress: true
+    client:
+        serviceUrl:
+            defaultZone: http://172.18.110.115:8001/eureka/
+
+ph:
+  client:
+    clientId: gate
+    clientSecret: gate
+    accessTokenUri: http://172.18.110.115:8088/auth/oauth/token
+    userAuthorizationUri: http://172.18.110.115:8088/auth/oauth/authorize
+    authenticationScheme: query
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: http://172.18.110.115:8088/resource/user/get_user_info
