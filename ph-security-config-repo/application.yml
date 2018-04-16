@@ -1,0 +1,19 @@
+server:
+  port: 8888
+
+eureka:
+    instance:
+       # statusPageUrlPath: ${management.context-path}/info
+       # healthCheckUrlPath: ${management.context-path}/health
+        preferIpAddress: true
+    client:
+        serviceUrl:
+            defaultZone: http://172.18.110.115:8001/eureka/
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/GUOYUANLIDEDABAICAI/ph
+          search-paths: ph-security-config-repo
