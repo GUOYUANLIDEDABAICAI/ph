@@ -12,6 +12,11 @@ spring:
     mode: LEGACYHTML5
     encoding: UTF-8
     cache: false
+  rabbitmq:
+    host: 139.199.197.45
+    post: 15672
+    username: guest
+    password: guest
 
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
