@@ -4,6 +4,7 @@ server:
       cookie:
         name: BackgroundSession
 
+foo: sdf
 spring:
   application:
     name: background-manager
