@@ -3,18 +3,6 @@ server:
     session:
       cookie:
         name: BackgroundSession
-        
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 20000
-
-ribbon:
-  ReadTimeout: 10000
-  ConnectTimeout: 10000
 
 spring:
   application:
@@ -24,6 +12,11 @@ spring:
     mode: LEGACYHTML5
     encoding: UTF-8
     cache: false
+  rabbitmq:
+    host: 139.199.197.45
+    post: 15672
+    username: guest
+    password: guest
 
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
