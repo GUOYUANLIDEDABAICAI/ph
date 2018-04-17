@@ -67,7 +67,7 @@ ph:
   client:
     clientId: gate
     clientSecret: gate
-    accessTokenUri: http://172.18.110.115:8088/auth/oauth/token
+    accessTokenUri: http://172.18.110.115:8002/auth/oauth/token
     userAuthorizationUri: http://172.18.110.115:8002/auth/oauth/authorize
     authenticationScheme: query
     clientAuthenticationScheme: form
