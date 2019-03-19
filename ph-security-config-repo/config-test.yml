@@ -1,0 +1,4 @@
+
+otc:
+  web:
+    serviceId: "otc-web"
